@@ -1,4 +1,4 @@
-// server.js
+
 require('dotenv').config();
 const express    = require('express');
 const mongoose   = require('mongoose');
@@ -9,19 +9,19 @@ const path       = require('path');
 
 const app = express();
 
-// 1) Logging de todos os pedidos
+
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} [REQUEST] ${req.method} ${req.url}`);
   next();
 });
 
-// 2) Conectar ao MongoDB
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log('✓ MongoDB conectado'))
   .catch(err => console.error('✗ Erro MongoDB:', err));
 
-// 3) Modelos Mongoose
+
 const userSchema = new mongoose.Schema({
   username: { type: String, unique: true },
   password: String
@@ -35,7 +35,7 @@ const searchSchema = new mongoose.Schema({
 });
 const Search = mongoose.model('Search', searchSchema);
 
-// 4) Middleware de parsing e sessão
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(session({
@@ -44,20 +44,20 @@ app.use(session({
   saveUninitialized: false
 }));
 
-// 5) Servir ficheiros estáticos
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 6) Rotas de teste
+
 app.get('/',    (req, res) => res.send('root OK'));
 app.get('/ping', (req, res) => res.send('pong'));
 
-// 7) Proteção de rotas
+
 function ensureAuth(req, res, next) {
   if (req.session.userId) return next();
   res.redirect('/login.html');
 }
 
-// 8) Autenticação
+
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -85,20 +85,20 @@ app.get('/logout', (req, res) => {
   res.redirect('/login.html');
 });
 
-// 9) Mashup clima + país com campos adicionais
+
 app.get('/api/search', ensureAuth, async (req, res) => {
   try {
     const city = req.query.q;
-    // a) OpenWeatherMap
+    
     const w = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
       params: { q: city, appid: process.env.OWM_KEY, units: 'metric' }
     });
-    // b) RestCountries
+    
     const code = w.data.sys.country;
     const c    = await axios.get(`https://restcountries.com/v3.1/alpha/${code}`);
-    // c) Guardar histórico
+    
     await Search.create({ user: req.session.userId, term: city });
-    // d) Responder JSON completo
+   
     return res.json({
       weather: {
         city:       w.data.name,
@@ -124,7 +124,7 @@ app.get('/api/search', ensureAuth, async (req, res) => {
   }
 });
 
-// 10) Histórico de pesquisas
+
 app.get('/history', ensureAuth, async (req, res) => {
   try {
     const docs = await Search
@@ -142,7 +142,7 @@ app.get('/history', ensureAuth, async (req, res) => {
   }
 });
 
-// 11) Iniciar servidor
+
 const port = process.env.PORT || 4000;
 app.listen(port, () =>
   console.log(`Servidor a correr em http://localhost:${port}`)

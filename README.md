@@ -74,6 +74,21 @@ Este projeto é uma aplicação web que permite pesquisar cidades, mostrar o cli
    * **Login**:   `http://localhost:4000/login.html`
    * **Pesquisa**: `http://localhost:4000/pesquisa.html`
    * **Histórico**: `http://localhost:4000/history.html`
+## Banco de Dados
+
+Utiliza o MongoDB Atlas ou uma instância local. Ao registar-se, a aplicação cria um documento na coleção users contendo o username e hash da password. Cada pesquisa efetuada é guardada na coleção searches com referência ao userId, termo pesquisado e timestamp.
+
+## Autenticação
+
+A aplicação usa express-session para manter sessões do utilizador. As passwords são armazenadas com hash via bcryptjs. Fluxo:
+
+Registo (POST /register): recebe username e password, aplica bcrypt.hash() e insere no MongoDB.
+
+Login (POST /login): verifica username, compara hash com bcrypt.compare(), define req.session.userId.
+
+Proteção de rotas: middleware ensureAuth redireciona para login caso não exista sessão.
+
+Logout (GET /logout): destrói a sessão e redireciona para login.html.
 
 ## Deploy
 
