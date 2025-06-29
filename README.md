@@ -63,7 +63,7 @@ Este projeto é uma aplicação web que permite pesquisar cidades, mostrar o cli
 
 ## Uso
 
-1. Inicie o servidor:
+1. Inicie o servidor no C:\Users\Victus\Documents\Programaçãoweb\trabalho2-mashup-apis-Diogoruivo31817 :
 
    
    npm run dev    # ou npm start
