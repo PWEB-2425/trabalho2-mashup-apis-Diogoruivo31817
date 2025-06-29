@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head><meta charset="UTF-8"><title>Pesquisa de Cidades</title></head>
+<head>
+  <meta charset="UTF-8">
+  <title>Pesquisa de Cidades</title>
+</head>
 <body>
   <h1>Pesquisa de Cidades</h1>
+
   <form id="formPesquisa">
-    <label>Nome da cidade: <input id="cidade" name="cidade" required></label>
+    <label for="cidade">Nome da cidade:</label>
+    <input id="cidade" name="cidade" required>
     <button>Pesquisar</button>
   </form>
+
   <div id="resultado">
     <div id="info-weather"></div>
     <div id="info-country"></div>
   </div>
-  <p><a href="/logout">Logout</a></p>
+
+  <p>
+    <a href="/history.html">Histórico</a> |
+    <a href="/logout">Logout</a>
+  </p>
+
   <script src="pesquisa.js"></script>
 </body>
 </html>
+
 
