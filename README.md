@@ -1,73 +1,114 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/psUndoci)
-# Trabalho #2 API MASHUP
+READ ME
+# Trabalho 2 – Mashup de APIs (Cidades)
 
-**Data de Entrega:** 26 de junho de 2025
+**Autores:**
 
----
+* Diogo Ruivo (n.º 31817)
+* Pedro Barreto (n.º 31661)
 
-## 1. Objetivo
+## Descrição
 
-Desenvolver uma aplicação web que:
+Este projeto é uma aplicação web que permite pesquisar cidades, mostrar o clima atual através da API OpenWeatherMap e dados do país através da API RestCountries. Inclui autenticação simples (registo/login/logout) e guarda o histórico de pesquisas no MongoDB.
 
-- Consuma e integre dados de pelo menos 2 APIs externas, com o **servidor** a efetuar todas as requisições (server-side).
-- Inclua um sistema de autenticação de utilizadores baseado em **Express Sessions** ou **Passport-local**.
-- Utilize base de dados **MongoDB** para armazenar informação dos utilizadores (por exemplo histórico de pesquisas)
+## Tecnologias e APIs
 
-## 2. Funcionalidades
+* **Back-end**: Node.js, Express
+* **Banco de Dados**: MongoDB via Mongoose
+* **Autenticação**: express-session, bcryptjs
+* **HTTP client**: axios
+* **Front-end**: HTML, JavaScript (Fetch API)
+* **APIs externas**:
 
-1. **Autenticação (Server)**
-   - Registo de utilizador (username + password)
-   - Início de sessão com sessões Express ou Passport-local
-   - Proteção de rotas para apenas utilizadores autenticados
-2. **Mashup de APIs**
-   - O utilizador, após login, introduz um termo de pesquisa (e.g., nome de cidade, artista, palavra)
-   - O servidor consome até duas APIs REST externas e retorna dados integrados ao cliente
-   - **Exemplos de APIs**:
-     - **OpenWeatherMap**: clima da cidade (`/weather?q={city}`)
-     - **RestCountries**: informações do país (`/alpha/{code}`)
-     - **Wikipedia REST API**: resumo de artigos (`/page/summary/{title}`)
-     - **Pixabay** ou **Unsplash**: imagens livres de royalties
-     - **NewsAPI** ou **GNews API**: notícias relacionadas
-     - **TMDB API**: informação e posters de filmes
-3. **Persistência em MongoDB**
-   - Guardar credenciais (idealmente hash das passwords)
-   - Histórico de pesquisas por utilizador
+  * [OpenWeatherMap](https://openweathermap.org/api) (clima)
+  * [RestCountries](https://restcountries.com/) (dados do país)
 
-## 3. Tecnologias
+## Pré-requisitos
 
-- **Frontend**: HTML, CSS (ou Tailwind/Bootstrap), JavaScript
-- **Backend**: Node.js (v12+), Express
-  - Autenticação: **express-session** ou **passport-local**
-  - Chamadas a APIs feitas no servidor com ftech API (alternativamente com **Axios**, ou **node-fetch** em versoes mais antigas) usando **async/await**
-- **Base de Dados**: MongoDB (Atlas ou local)
+* Node.js v18+ instalado
+* Acesso a um cluster MongoDB (Atlas ou local)
+* Chave de API do OpenWeatherMap
 
-## 4. APIs Externas (sugeridas)
+## Instalação
 
-- **OpenWeatherMap** (clima e geocoding)
-- **RestCountries** (bandeiras, capitais, moedas)
-- **Wikipedia REST API** (enciclopédia)
-- **Pixabay** / **Unsplash** (imagens)
-- **NewsAPI** / **GNews API** (notícias)
-- **Exchange Rates API** (câmbio de moedas)
-- **DictionaryAPI** (definições, sinónimos)
-- **TMDB API** (filmes, trailers)
+1. Clone este repositório:
 
-> **Nota:** Registem-se nas plataformas e obtenham as chaves necessárias. Todas as requisições a estas APIs devem ser feitas pelo servidor, protegendo as suas credenciais. As API Keys não devem ficar expostas no código.
+   
+   git clone https://github.com/SEU_USUARIO/trabalho2-mashup-apis-Diogoruivo31817.git
+   cd trabalho2-mashup-apis-Diogoruivo31817
+   
+2. Instale dependências:
 
-## 5. Regras & Avaliação
+   
+   npm install
+   
+3. Copie o ficheiro de ambiente e configure as variáveis de ambiente:
 
-1. **Grupos:** 2 elementos por grupo.
-2. **GitHubClassroom:** Repositório privado com acesso ao utilizador `pedromoreira-estg`.
-3. **Build & Install:** Incluir script para instalar dependências e iniciar a aplicação.
-4. **Documentação (`README.md`):** Incluir:
-   - Identificação dos elementos do grupo
-   - Tecnologias e APIs utilizadas
-   - Instruções de instalação e configuração das chaves e do MongoDB
-   - Comandos para executar localmente
-   - Link de deployment (**render.com** ou equivalente)
-5. **Deployment:** Aplicação operacional online (ex.: render.com).
-6. **Entrega em Moodle:** Cópia do `README.md` e `.zip`e **link** do repositório.
+   
+   cp .env.example .env
+ 
 
----
+   Edite o `.env` com:
 
-Boa sorte!
+   
+   PORT=4000
+   MONGO_URI=mongodb+srv://<usuario>:<password>@cluster0.mongodb.net/trabalho2?retryWrites=true&w=majority
+   SESSION_SECRET=umaStringMuitoSecreta
+   OWM_KEY=<sua_openweathermap_key>
+   
+
+## Scripts
+
+* `npm start` — inicia o servidor em modo de produção (Node)
+* `npm run dev` — inicia o servidor em modo de desenvolvimento (nodemon)
+
+## Uso
+
+1. Inicie o servidor:
+
+   
+   npm run dev    # ou npm start
+   
+2. Aceda no browser:
+
+   * **Registo**: `http://localhost:4000/register.html`
+   * **Login**:   `http://localhost:4000/login.html`
+   * **Pesquisa**: `http://localhost:4000/pesquisa.html`
+   * **Histórico**: `http://localhost:4000/history.html`
+
+## Deploy
+
+A aplicação está publicada em: https://trabalho2-mashup-apis-diogoruivo31817.onrender.com
+
+
+Endpoints disponíveis:
+
+Registo: https://trabalho2-mashup-apis-diogoruivo31817.onrender.com/register.html
+
+Login:   https://trabalho2-mashup-apis-diogoruivo31817.onrender.com/login.html
+
+Pesquisa:https://trabalho2-mashup-apis-diogoruivo31817.onrender.com/pesquisa.html
+
+Histórico:https://trabalho2-mashup-apis-diogoruivo31817.onrender.com/history.html
+
+No painel do Render, defina as seguintes variáveis de ambiente:
+
+* `MONGO_URI`
+* `SESSION_SECRET`
+* `OWM_KEY`
+* `PORT`
+
+## Estrutura do Projeto
+
+```
+trabalho2-mashup-apis-Diogoruivo31817/
+├── .env.example       # modelo de variáveis de ambiente
+├── .gitignore
+├── package.json
+├── server.js          # lógica do servidor, autenticação e mashup
+└── public/
+    ├── register.html
+    ├── login.html
+    ├── pesquisa.html
+    ├── pesquisa.js
+    ├── history.html
+    └── history.js
